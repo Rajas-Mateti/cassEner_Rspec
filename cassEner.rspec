@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<rspec xmlns="http://www.geni.net/resources/rspec/3" xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" type="Manifest">
+  <!-- Define a private LAN for Cassandra cluster communication -->
+  <link client_id="lan">
+    <interface_ref client_id="node1:if0"/>
+    <interface_ref client_id="node2:if0"/>
+    <interface_ref client_id="node3:if0"/>
+    <interface_ref client_id="node4:if0"/>
+    <interface_ref client_id="node5:if0"/>
+  </link>
+
+  <!-- Define Node 1 with YCSB -->
+  <node client_id="node1" component_manager_id="urn:publicid:IDN+emulab.net+authority+cm" exclusive="true">
+    <hardware_type name="d430"/>
+    <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU20-64-STD"/>
+    <interface client_id="if0"/>
+    <services>
+      <!-- Install Cassandra -->
+      <execute command="sudo apt update && sudo apt install -y openjdk-11-jdk && sudo apt install -y sysstat"/>
+      <execute command="curl -O https://downloads.apache.org/cassandra/cassandra_4.x_all.deb && sudo dpkg -i cassandra_4.x_all.deb && sudo systemctl start cassandra"/>
+      <!-- Install YCSB -->
+      <execute command="sudo apt install -y git maven"/>
+      <execute command="git clone https://github.com/brianfrankcooper/YCSB.git /home/YCSB"/>
+      <execute command="cd /home/YCSB && mvn -pl com.yahoo.ycsb:cassandra-binding -am clean package"/>
+    </services>
+  </node>
+
+  <!-- Define Nodes 2-5 -->
+  <node client_id="node2" component_manager_id="urn:publicid:IDN+emulab.net+authority+cm" exclusive="true">
+    <hardware_type name="d430"/>
+    <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU20-64-STD"/>
+    <interface client_id="if0"/>
+    <services>
+      <execute command="sudo apt update && sudo apt install -y openjdk-11-jdk && sudo apt install -y sysstat"/>
+      <execute command="curl -O https://downloads.apache.org/cassandra/cassandra_4.x_all.deb && sudo dpkg -i cassandra_4.x_all.deb && sudo systemctl start cassandra"/>
+    </services>
+  </node>
+  <node client_id="node3" component_manager_id="urn:publicid:IDN+emulab.net+authority+cm" exclusive="true">
+    <hardware_type name="d430"/>
+    <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU20-64-STD"/>
+    <interface client_id="if0"/>
+    <services>
+      <execute command="sudo apt update && sudo apt install -y openjdk-11-jdk && sudo apt install -y sysstat"/>
+      <execute command="curl -O https://downloads.apache.org/cassandra/cassandra_4.x_all.deb && sudo dpkg -i cassandra_4.x_all.deb && sudo systemctl start cassandra"/>
+    </services>
+  </node>
+  <node client_id="node4" component_manager_id="urn:publicid:IDN+emulab.net+authority+cm" exclusive="true">
+    <hardware_type name="d430"/>
+    <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU20-64-STD"/>
+    <interface client_id="if0"/>
+    <services>
+      <execute command="sudo apt update && sudo apt install -y openjdk-11-jdk && sudo apt install -y sysstat"/>
+      <execute command="curl -O https://downloads.apache.org/cassandra/cassandra_4.x_all.deb && sudo dpkg -i cassandra_4.x_all.deb && sudo systemctl start cassandra"/>
+    </services>
+  </node>
+  <node client_id="node5" component_manager_id="urn:publicid:IDN+emulab.net+authority+cm" exclusive="true">
+    <hardware_type name="d430"/>
+    <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU20-64-STD"/>
+    <interface client_id="if0"/>
+    <services>
+      <execute command="sudo apt update && sudo apt install -y openjdk-11-jdk && sudo apt install -y sysstat"/>
+      <execute command="curl -O https://downloads.apache.org/cassandra/cassandra_4.x_all.deb && sudo dpkg -i cassandra_4.x_all.deb && sudo systemctl start cassandra"/>
+    </services>
+  </node>
+</rspec>
